@@ -3,6 +3,7 @@ pipeline {
         label 'ROBOSHOP'
     }
 
+
     stages {
         stage('Build') {
             steps {
@@ -18,6 +19,26 @@ pipeline {
             steps {
                 sh 'echo deploy'
             }
+        }
+        
+    }
+
+    post {
+        always {
+            echo 'Pipeline finished (runs every time)'
+            cleanWs()
+        }
+        success {
+            echo 'Build succeeded'
+        }
+        failure {
+            echo 'Build failed'
+        }
+        unstable {
+            echo 'Build is unstable'
+        }
+        changed {
+            echo 'Build status changed from the previous run'
         }
     }
 }
